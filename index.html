@@ -107,12 +107,12 @@
             <div class="lg:col-span-1 flex flex-col gap-10">
                 <div class="card p-6">
                     <h2 class="text-2xl font-semibold mb-5 text-slate-800 border-b pb-3">Adicionar Nova Dívida</h2>
-                    <form id="add-debt-form" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="sm:col-span-2">
+                    <form id="add-debt-form" class="space-y-4">
+                        <div>
                             <label for="debt-name" class="block text-sm font-medium text-slate-600 mb-1">Nome da Dívida</label>
                             <input type="text" id="debt-name" placeholder="Ex: Fatura do Cartão" class="p-2 border rounded-md w-full form-input border-slate-300" required>
                         </div>
-                        <div class="sm:col-span-2">
+                        <div>
                             <div class="flex justify-between items-center mb-1">
                                 <label for="debt-category" class="block text-sm font-medium text-slate-600">Categoria</label>
                                 <button type="button" id="manage-categories-btn" class="text-xs text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1">
@@ -121,26 +121,34 @@
                             </div>
                             <select id="debt-category" class="p-2 border rounded-md w-full form-input border-slate-300" required></select>
                         </div>
-                        <div>
-                           <label for="debt-type" class="block text-sm font-medium text-slate-600 mb-1">Tipo</label>
-                            <select id="debt-type" class="p-2 border rounded-md w-full form-input border-slate-300" required>
-                                <option value="Variável">Variável</option>
-                                <option value="Fixa">Fixa</option>
-                            </select>
+                        <div class="grid grid-cols-2 gap-4">
+                             <div>
+                               <label for="debt-type" class="block text-sm font-medium text-slate-600 mb-1">Tipo</label>
+                                <select id="debt-type" class="p-2 border rounded-md w-full form-input border-slate-300" required>
+                                    <option value="Variável">Variável</option>
+                                    <option value="Fixa">Fixa</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="debt-due-date" class="block text-sm font-medium text-slate-600 mb-1">Vencimento</label>
+                                <input type="date" id="debt-due-date" class="p-2 border rounded-md w-full form-input border-slate-300 text-slate-500" required>
+                            </div>
                         </div>
-                        <div>
-                            <label for="debt-total" class="block text-sm font-medium text-slate-600 mb-1">Valor Total</label>
-                            <input type="number" id="debt-total" placeholder="R$ 0,00" class="p-2 border rounded-md w-full form-input border-slate-300" required step="0.01">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="debt-total" class="block text-sm font-medium text-slate-600 mb-1">Valor Total</label>
+                                <input type="number" id="debt-total" placeholder="R$ 1200,00" class="p-2 border rounded-md w-full form-input border-slate-300" required step="0.01">
+                            </div>
+                            <div>
+                                <label for="debt-installments" class="block text-sm font-medium text-slate-600 mb-1">Nº de Parcelas</label>
+                                <input type="number" id="debt-installments" placeholder="1" value="1" min="1" class="p-2 border rounded-md w-full form-input border-slate-300" required>
+                            </div>
                         </div>
-                        <div class="sm:col-span-2">
-                            <label for="debt-due-date" class="block text-sm font-medium text-slate-600 mb-1">Vencimento</label>
-                            <input type="date" id="debt-due-date" class="p-2 border rounded-md w-full form-input border-slate-300 text-slate-500" required>
-                        </div>
-                        <div class="sm:col-span-2 flex items-center justify-center bg-slate-50 p-2 rounded-md">
+                        <div class="flex items-center justify-center bg-slate-50 p-2 rounded-md">
                             <input type="checkbox" id="debt-recurrent" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                            <label for="debt-recurrent" class="ml-2 block text-sm font-medium text-slate-700">Dívida recorrente (repete mensalmente)</label>
+                            <label for="debt-recurrent" class="ml-2 block text-sm font-medium text-slate-700">Dívida recorrente (assinatura)</label>
                         </div>
-                        <div class="sm:col-span-2 mt-2">
+                        <div class="pt-2">
                             <button type="submit" class="w-full btn btn-primary text-white font-semibold p-3 rounded-md">
                                 <i class="fas fa-plus mr-2"></i>Adicionar Dívida
                             </button>
@@ -171,10 +179,10 @@
                             <thead class="bg-slate-50/50 border-b border-slate-200">
                                 <tr>
                                     <th class="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Dívida</th>
-                                    <th class="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Valor Pago</th>
-                                    <th class="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Vencimento</th>
+                                    <th class="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Valor da Parcela</th>
+                                    <th class="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Valor Restante</th>
+                                    <th class="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Próx. Vencimento</th>
                                     <th class="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
-                                    <th class="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Pago em</th>
                                     <th class="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-center">Ações</th>
                                 </tr>
                             </thead>
@@ -308,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const year = calendarDate.getFullYear(), month = calendarDate.getMonth();
         monthYearEl.textContent = `${calendarDate.toLocaleString('pt-BR', { month: 'long' })} ${year}`;
         const firstDay = new Date(year, month, 1).getDay(), daysInMonth = new Date(year, month + 1, 0).getDate();
-        const dueDates = debts.filter(d => (d.total - d.paid) > 0).map(d => d.dueDate.split('T')[0]);
+        const dueDates = debts.filter(d => d.installmentsPaid < d.installmentsTotal).map(d => d.dueDate.split('T')[0]);
         for (let i = 0; i < firstDay; i++) calendarDaysEl.insertAdjacentHTML('beforeend', '<div></div>');
         for (let day = 1; day <= daysInMonth; day++) {
             const dayStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
@@ -353,30 +361,40 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     const getStatus = (debt) => {
-        if ((debt.total - debt.paid) <= 0.001) return { text: 'Pago', class: 'status-pago' };
+        if (debt.installmentsPaid >= debt.installmentsTotal) return { text: 'Finalizado', class: 'status-pago' };
         const today = new Date(); today.setHours(0,0,0,0);
         return new Date(debt.dueDate + 'T00:00:00') < today ? { text: 'Atrasado', class: 'status-atrasado' } : { text: 'Em Dia', class: 'status-em-dia' };
     };
+
     function renderDebts() {
         debtTableBody.innerHTML = '';
         const groupedDebts = debts.reduce((acc, debt) => { (acc[debt.category] = acc[debt.category] || []).push(debt); return acc; }, {});
         const sortedCategories = Object.keys(groupedDebts).sort();
         if (debts.length === 0) { debtTableBody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-500">Nenhuma dívida cadastrada ainda.</td></tr>`; }
+        
         sortedCategories.forEach(categoryName => {
             const category = categories.find(c => c.name === categoryName) || { name: categoryName, color: '#64748b', icon: 'fa-receipt' };
             debtTableBody.insertAdjacentHTML('beforeend', `<tr class="bg-slate-100/80 category-group-header"><th colspan="6" style="color: ${category.color};"><i class="fas ${category.icon} fa-fw mr-3"></i>${category.name}</th></tr>`);
+            
             groupedDebts[categoryName].sort((a,b) => new Date(a.dueDate) - new Date(b.dueDate)).forEach(debt => {
-                const remaining = debt.total - debt.paid; const status = getStatus(debt);
+                const installmentValue = debt.total / debt.installmentsTotal;
+                const remainingValue = debt.total - (debt.installmentsPaid * installmentValue);
+                const isPaidOff = debt.installmentsPaid >= debt.installmentsTotal;
+                const status = getStatus(debt);
                 const calendarLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(`Vencimento: ${debt.name}`)}&dates=${debt.dueDate.replace(/-/g, '')}/${debt.dueDate.replace(/-/g, '')}`;
+                
                 const rowHTML = `
-                    <td class="p-4"><div class="font-medium text-slate-800 flex items-center">${debt.name} ${debt.isRecurrent ? '<i class="fas fa-sync-alt ml-2 text-xs text-slate-400" title="Dívida Recorrente"></i>' : ''}</div><div class="text-sm text-slate-500">${debt.type} | Restante: ${formatCurrency(remaining)}</div></td>
-                    <td class="p-4 text-right"><input type="number" value="${debt.paid.toFixed(2)}" min="0" max="${debt.total}" step="0.01" data-id="${debt.id}" class="paid-input p-1 border rounded-md w-28 text-right border-slate-300 form-input"></td>
-                    <td class="p-4 text-slate-600">${formatDate(debt.dueDate)}</td>
+                    <td class="p-4">
+                        <div class="font-medium text-slate-800 flex items-center">${debt.name} ${debt.isRecurrent ? '<i class="fas fa-sync-alt ml-2 text-xs text-slate-400" title="Dívida Recorrente"></i>' : ''}</div>
+                        <div class="text-sm text-slate-500">${debt.type} | ${isPaidOff ? 'Finalizado' : `Parcela ${debt.installmentsPaid + 1} de ${debt.installmentsTotal}`}</div>
+                    </td>
+                    <td class="p-4 text-slate-600 text-right">${formatCurrency(installmentValue)}</td>
+                    <td class="p-4 font-semibold text-red-600 text-right">${formatCurrency(remainingValue)}</td>
+                    <td class="p-4 text-slate-600">${isPaidOff ? '—' : formatDate(debt.dueDate)}</td>
                     <td class="p-4"><span class="status-badge ${status.class}">${status.text}</span></td>
-                    <td class="p-4 text-slate-600">${formatDate(debt.datePaid)}</td>
                     <td class="p-4 text-center whitespace-nowrap">
-                         <button class="text-green-500 hover:text-green-700 mr-3 pay-full-btn" data-id="${debt.id}" title="Quitar Dívida"><i class="fas fa-circle-check fa-lg"></i></button>
-                         <a href="${calendarLink}" target="_blank" class="text-sky-600 hover:text-sky-800 mr-3" title="Adicionar à Agenda"><i class="fas fa-calendar-plus fa-lg"></i></a>
+                         <button class="text-green-500 hover:text-green-700 mr-3 pay-installment-btn" data-id="${debt.id}" title="Pagar Parcela" ${isPaidOff ? 'disabled' : ''} style="${isPaidOff ? 'opacity: 0.3; cursor: not-allowed;' : ''}"><i class="fas fa-circle-check fa-lg"></i></button>
+                         <a href="${calendarLink}" target="_blank" class="text-sky-600 hover:text-sky-800 mr-3 ${isPaidOff ? 'hidden' : ''}" title="Adicionar à Agenda"><i class="fas fa-calendar-plus fa-lg"></i></a>
                          <button class="text-red-500 hover:text-red-700 delete-btn" data-id="${debt.id}" title="Excluir Dívida" data-type="debt"><i class="fas fa-trash-alt fa-lg"></i></button>
                     </td>`;
                 debtTableBody.insertAdjacentHTML('beforeend', `<tr class="debt-row hover:bg-slate-50" style="border-color: ${category.color};">${rowHTML}</tr>`);
@@ -384,39 +402,43 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         updateDebtTotals(); renderCalendar();
     }
+    
     const updateDebtTotals = () => {
-        const totalAmount = debts.reduce((s, d) => s + d.total, 0), totalPaid = debts.reduce((s, d) => s + d.paid, 0);
-        totalAmountEl.textContent = formatCurrency(totalAmount); totalPaidEl.textContent = formatCurrency(totalPaid);
+        const totalAmount = debts.reduce((s, d) => s + d.total, 0);
+        const totalPaid = debts.reduce((s, d) => s + (d.total / d.installmentsTotal * d.installmentsPaid), 0);
+        totalAmountEl.textContent = formatCurrency(totalAmount); 
+        totalPaidEl.textContent = formatCurrency(totalPaid);
         totalRemainingEl.textContent = formatCurrency(totalAmount - totalPaid);
     };
+
     function handlePaidRecurrentDebt(paidDebt) {
         const dueDate = new Date(paidDebt.dueDate + 'T00:00:00');
         dueDate.setMonth(dueDate.getMonth() + 1);
         const originalDay = new Date(paidDebt.dueDate + 'T00:00:00').getDate();
         if (dueDate.getDate() !== originalDay) { dueDate.setDate(0); }
-        const newDebt = { ...paidDebt, id: Date.now(), paid: 0, datePaid: null, dueDate: dueDate.toISOString().split('T')[0] };
+        const newDebt = { ...paidDebt, id: Date.now(), installmentsPaid: 0, dueDate: dueDate.toISOString().split('T')[0] };
         debts.push(newDebt);
     }
+
     debtForm.addEventListener('submit', (e) => {
         e.preventDefault(); const form = e.target;
-        debts.push({ id: Date.now(), name: form['debt-name'].value, type: form['debt-type'].value, category: form['debt-category'].value, total: parseFloat(form['debt-total'].value), paid: 0, dueDate: form['debt-due-date'].value, datePaid: null, isRecurrent: form['debt-recurrent'].checked });
+        debts.push({ 
+            id: Date.now(), 
+            name: form['debt-name'].value, 
+            type: form['debt-type'].value, 
+            category: form['debt-category'].value, 
+            total: parseFloat(form['debt-total'].value),
+            installmentsTotal: parseInt(form['debt-installments'].value) || 1,
+            installmentsPaid: 0,
+            dueDate: form['debt-due-date'].value, 
+            isRecurrent: form['debt-recurrent'].checked 
+        });
         renderAll(); form.reset();
+        document.getElementById('debt-installments').value = 1;
     });
-    debtTableBody.addEventListener('change', (e) => {
-        if (e.target.classList.contains('paid-input')) {
-            const debt = debts.find(d => d.id === parseInt(e.target.dataset.id));
-            const wasUnpaid = (debt.total - debt.paid) > 0.001;
-            debt.paid = Math.max(0, Math.min(debt.total, parseFloat(e.target.value)));
-            const isNowPaid = (debt.total - debt.paid) <= 0.001;
-            if (isNowPaid) {
-                debt.datePaid = debt.datePaid || new Date().toISOString().split('T')[0];
-                if (wasUnpaid && debt.isRecurrent) handlePaidRecurrentDebt(debt);
-            } else { debt.datePaid = null; }
-            renderAll();
-        }
-    });
+    
     document.getElementById('add-all-to-calendar-btn').addEventListener('click', () => {
-        const unpaid = debts.filter(d => (d.total - d.paid) > 0);
+        const unpaid = debts.filter(d => d.installmentsPaid < d.installmentsTotal);
         if (unpaid.length === 0) { openModal('Agenda', '<p>Parabéns! Nenhuma dívida pendente.</p>'); return; }
         const links = unpaid.map(d => `<a href="https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(`Vencimento: ${d.name}`)}&dates=${d.dueDate.replace(/-/g, '')}/${d.dueDate.replace(/-/g, '')}" target="_blank" class="block mb-2 text-blue-600 hover:underline">${d.name} - ${formatDate(d.dueDate)}</a>`).join('');
         openModal('Adicionar Vencimentos à Agenda', `<div><p class="mb-4">Clique nos links abaixo para adicionar cada vencimento:</p>${links}</div>`);
@@ -454,13 +476,21 @@ document.addEventListener('DOMContentLoaded', function () {
             else { investments = investments.filter(i => i.id !== id); }
             renderAll();
         } 
-        else if (target.classList.contains('pay-full-btn')) {
+        else if (target.classList.contains('pay-installment-btn')) {
             const debt = debts.find(d => d.id === id);
-            if (debt) {
-                const wasUnpaid = (debt.total - debt.paid) > 0.001;
-                debt.paid = debt.total;
-                debt.datePaid = debt.datePaid || new Date().toISOString().split('T')[0];
-                if (wasUnpaid && debt.isRecurrent) handlePaidRecurrentDebt(debt);
+            if (debt && debt.installmentsPaid < debt.installmentsTotal) {
+                debt.installmentsPaid++;
+                const isPaidOff = debt.installmentsPaid >= debt.installmentsTotal;
+
+                if (isPaidOff && debt.isRecurrent) {
+                    handlePaidRecurrentDebt(debt);
+                } else if (!isPaidOff) {
+                    const nextDueDate = new Date(debt.dueDate + 'T00:00:00');
+                    nextDueDate.setMonth(nextDueDate.getMonth() + 1);
+                    const originalDay = new Date(debt.dueDate + 'T00:00:00').getDate();
+                    if (nextDueDate.getDate() !== originalDay) { nextDueDate.setDate(0); }
+                    debt.dueDate = nextDueDate.toISOString().split('T')[0];
+                }
                 renderAll();
             }
         }
@@ -571,3 +601,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
